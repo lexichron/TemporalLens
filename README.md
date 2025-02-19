@@ -10,3 +10,4 @@
 # Installations
 
 - python 3.10
+- Run `download.sh` to download models.
