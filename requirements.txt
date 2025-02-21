@@ -3,3 +3,4 @@ pandas
 jupyterlab
 OmniEvent
 ipywidgets
+pyarrow
