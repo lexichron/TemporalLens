@@ -4,3 +4,6 @@ jupyterlab
 OmniEvent
 ipywidgets
 pyarrow
+sentence-transformers
+scikit-learn
+matplotlib
