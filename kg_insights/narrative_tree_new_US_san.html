@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#cccccc", "id": "would rather not impose tariffs", "label": "would rather not\u2026", "shape": "dot", "size": 20.57127383490532, "title": "would rather not impose tariffs\u003cbr\u003ePageRank: 0.0038\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(188,189,34)", "id": "US tariff hikes on Chinese imports", "label": "US tariff hikes\u2026", "shape": "dot", "size": 20.850371429098622, "title": "US tariff hikes on Chinese imports\u003cbr\u003ePageRank: 0.0057\u003cbr\u003eCluster: Chinese automakers seek retaliatory tariffs on EU cars"}, {"color": "#cccccc", "id": "slowing economy", "label": "slowing economy", "shape": "dot", "size": 21.770231755480538, "title": "slowing economy\u003cbr\u003ePageRank: 0.0118\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "tariff threat", "label": "tariff threat", "shape": "dot", "size": 20.654681796216316, "title": "tariff threat\u003cbr\u003ePageRank: 0.0044\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "Taiwan President Lai Ching-te\u0027s Pacific trip", "label": "Taiwan President Lai\u2026", "shape": "dot", "size": 20.413205364561133, "title": "Taiwan President Lai Ching-te\u0027s Pacific trip\u003cbr\u003ePageRank: 0.0028\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "ramped up military activities", "label": "ramped up military\u2026", "shape": "dot", "size": 20.551208768390264, "title": "ramped up military activities\u003cbr\u003ePageRank: 0.0037\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "visit to the US territory of Guam", "label": "visit to the\u2026", "shape": "dot", "size": 20.478643540724118, "title": "visit to the US territory of Guam\u003cbr\u003ePageRank: 0.0032\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "gradually resume importing seafood", "label": "gradually resume importing\u2026", "shape": "dot", "size": 21.022587969319183, "title": "gradually resume importing seafood\u003cbr\u003ePageRank: 0.0068\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "raise tariffs by as much as 20 per cent", "label": "raise tariffs by\u2026", "shape": "dot", "size": 20.477618712883096, "title": "raise tariffs by as much as 20 per cent\u003cbr\u003ePageRank: 0.0032\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "release of treated water", "label": "release of treated\u2026", "shape": "dot", "size": 21.889528479326216, "title": "release of treated water\u003cbr\u003ePageRank: 0.0126\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "Trump has promised to impose sweeping tariffs", "label": "Trump has promised\u2026", "shape": "dot", "size": 20.3942107515721, "title": "Trump has promised to impose sweeping tariffs\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "economic growth rate of Singapore is anticipated to decelerate", "label": "economic growth rate\u2026", "shape": "dot", "size": 20.709047357703078, "title": "economic growth rate of Singapore is anticipated to decelerate\u003cbr\u003ePageRank: 0.0047\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(188,189,34)", "id": "Beijing has vowed retaliation", "label": "Beijing has vowed\u2026", "shape": "dot", "size": 20.463761984198175, "title": "Beijing has vowed retaliation\u003cbr\u003ePageRank: 0.0031\u003cbr\u003eCluster: Chinese automakers seek retaliatory tariffs on EU cars"}, {"color": "#cccccc", "id": "$300 million sale", "label": "$300 million sale", "shape": "dot", "size": 20.93127562085867, "title": "$300 million sale\u003cbr\u003ePageRank: 0.0062\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "stepped up its military and political pressure", "label": "stepped up its\u2026", "shape": "dot", "size": 20.610248056014036, "title": "stepped up its military and political pressure\u003cbr\u003ePageRank: 0.0041\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "threatened to apply a tariff of 25 per cent", "label": "threatened to apply\u2026", "shape": "dot", "size": 20.490563211052553, "title": "threatened to apply a tariff of 25 per cent\u003cbr\u003ePageRank: 0.0033\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(23,190,207)", "id": "Mexico\u0027s warning on tariff consequences", "label": "Mexico\u0027s warning on\u2026", "shape": "dot", "size": 20.72399699454579, "title": "Mexico\u0027s warning on tariff consequences\u003cbr\u003ePageRank: 0.0048\u003cbr\u003eCluster: vows of retaliation"}, {"color": "rgb(214,39,40)", "id": "US approves $515 million arms sale to Taiwan", "label": "US approves $515\u2026", "shape": "dot", "size": 20.38887486891351, "title": "US approves $515 million arms sale to Taiwan\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: new US sanctions"}, {"color": "#cccccc", "id": "promotional efforts to boost seafood exports", "label": "promotional efforts to\u2026", "shape": "dot", "size": 21.022587969319183, "title": "promotional efforts to boost seafood exports\u003cbr\u003ePageRank: 0.0068\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "started a trade war with China", "label": "started a trade\u2026", "shape": "dot", "size": 21.35445161462292, "title": "started a trade war with China\u003cbr\u003ePageRank: 0.0090\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "vows to resist annexation", "label": "vows to resist\u2026", "shape": "dot", "size": 20.475938458235014, "title": "vows to resist annexation\u003cbr\u003ePageRank: 0.0032\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "visits", "label": "visits", "shape": "dot", "size": 20.478643540724118, "title": "visits\u003cbr\u003ePageRank: 0.0032\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "campaign to boycott China", "label": "campaign to boycott\u2026", "shape": "dot", "size": 20.3942107515721, "title": "campaign to boycott China\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "Trump\u0027s \u0027America First\u0027 policy", "label": "Trump\u0027s \u0027America First\u0027\u2026", "shape": "dot", "size": 20.3942107515721, "title": "Trump\u0027s \u0027America First\u0027 policy\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "discussing a 10 per cent punitive duty", "label": "discussing a 10\u2026", "shape": "dot", "size": 20.660445652019195, "title": "discussing a 10 per cent punitive duty\u003cbr\u003ePageRank: 0.0044\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(214,39,40)", "id": "new US sanctions", "label": "new US sanctions", "shape": "dot", "size": 20.30301349213034, "title": "new US sanctions\u003cbr\u003ePageRank: 0.0020\u003cbr\u003eCluster: new US sanctions"}, {"color": "#cccccc", "id": "authorises US$571 million in military aid to Taiwan", "label": "authorises US$571 million\u2026", "shape": "dot", "size": 20.475938458235014, "title": "authorises US$571 million in military aid to Taiwan\u003cbr\u003ePageRank: 0.0032\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "10 per cent tariffs on all Chinese imports", "label": "10 per cent\u2026", "shape": "dot", "size": 20.759495448957885, "title": "10 per cent tariffs on all Chinese imports\u003cbr\u003ePageRank: 0.0051\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "received 38 advanced Abrams battle tanks", "label": "received 38 advanced\u2026", "shape": "dot", "size": 21.13388031758659, "title": "received 38 advanced Abrams battle tanks\u003cbr\u003ePageRank: 0.0076\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "China vows \u2018countermeasures\u2019", "label": "China vows \u2018countermeasures\u2019", "shape": "dot", "size": 20.413205364561133, "title": "China vows \u2018countermeasures\u2019\u003cbr\u003ePageRank: 0.0028\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "threatened to slap a 60 per cent flat fee on Chinese goods", "label": "threatened to slap\u2026", "shape": "dot", "size": 21.823608672297382, "title": "threatened to slap a 60 per cent flat fee on Chinese goods\u003cbr\u003ePageRank: 0.0122\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "China banned all seafood imports", "label": "China banned all\u2026", "shape": "dot", "size": 22.54609287438278, "title": "China banned all seafood imports\u003cbr\u003ePageRank: 0.0170\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "frequent military operations", "label": "frequent military operations", "shape": "dot", "size": 20.739040121188793, "title": "frequent military operations\u003cbr\u003ePageRank: 0.0049\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(227,119,194)", "id": "tensions between the US and China are high", "label": "tensions between the\u2026", "shape": "dot", "size": 21.510347446933732, "title": "tensions between the US and China are high\u003cbr\u003ePageRank: 0.0101\u003cbr\u003eCluster: China cutting off talks"}, {"color": "#cccccc", "id": "very productive meeting", "label": "very productive meeting", "shape": "dot", "size": 20.3942107515721, "title": "very productive meeting\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(23,190,207)", "id": "trade war threat", "label": "trade war threat", "shape": "dot", "size": 21.36564539646308, "title": "trade war threat\u003cbr\u003ePageRank: 0.0091\u003cbr\u003eCluster: vows of retaliation"}, {"color": "#cccccc", "id": "unveiled steep tariff increases", "label": "unveiled steep tariff\u2026", "shape": "dot", "size": 20.958269175405, "title": "unveiled steep tariff increases\u003cbr\u003ePageRank: 0.0064\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "joint exercises", "label": "joint exercises", "shape": "dot", "size": 20.945010815226446, "title": "joint exercises\u003cbr\u003ePageRank: 0.0063\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "urged the US to stop sending wrong signals", "label": "urged the US\u2026", "shape": "dot", "size": 20.548851261357363, "title": "urged the US to stop sending wrong signals\u003cbr\u003ePageRank: 0.0037\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "discussed \"China\u0027s military threats\"", "label": "discussed \"China\u0027s military\u2026", "shape": "dot", "size": 20.413205364561133, "title": "discussed \"China\u0027s military threats\"\u003cbr\u003ePageRank: 0.0028\u003cbr\u003eCluster: Unclustered"}, {"color": "#cccccc", "id": "pledged to increase the budget deficit, issue more debt and loosen monetary policy", "label": "pledged to increase\u2026", "shape": "dot", "size": 20.3942107515721, "title": "pledged to increase the budget deficit, issue more debt and loosen monetary policy\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(23,190,207)", "id": "sweeping tariffs on goods", "label": "sweeping tariffs on\u2026", "shape": "dot", "size": 21.020042580345894, "title": "sweeping tariffs on goods\u003cbr\u003ePageRank: 0.0068\u003cbr\u003eCluster: vows of retaliation"}, {"color": "#cccccc", "id": "China increased military pressure", "label": "China increased military\u2026", "shape": "dot", "size": 20.977341880655707, "title": "China increased military pressure\u003cbr\u003ePageRank: 0.0065\u003cbr\u003eCluster: Unclustered"}, {"color": "rgb(214,39,40)", "id": "Global oil prices jumped", "label": "Global oil prices\u2026", "shape": "dot", "size": 20.38887486891351, "title": "Global oil prices jumped\u003cbr\u003ePageRank: 0.0026\u003cbr\u003eCluster: new US sanctions"}, {"color": "#cccccc", "id": "25 per cent tariff on all products from Mexico and Canada", "label": "25 per cent\u2026", "shape": "dot", "size": 20.573971172363553, "title": "25 per cent tariff on all products from Mexico and Canada\u003cbr\u003ePageRank: 0.0038\u003cbr\u003eCluster: Unclustered"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "tariff threat", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "tariff threat", "to": "10 per cent tariffs on all Chinese imports"}, {"arrows": "to", "from": "tariff threat", "to": "discussing a 10 per cent punitive duty"}, {"arrows": "to", "from": "Taiwan President Lai Ching-te\u0027s Pacific trip", "to": "visits"}, {"arrows": "to", "from": "Taiwan President Lai Ching-te\u0027s Pacific trip", "to": "visit to the US territory of Guam"}, {"arrows": "to", "from": "ramped up military activities", "to": "China increased military pressure"}, {"arrows": "to", "from": "ramped up military activities", "to": "stepped up its military and political pressure"}, {"arrows": "to", "from": "ramped up military activities", "to": "urged the US to stop sending wrong signals"}, {"arrows": "to", "from": "ramped up military activities", "to": "frequent military operations"}, {"arrows": "to", "from": "gradually resume importing seafood", "to": "release of treated water"}, {"arrows": "to", "from": "raise tariffs by as much as 20 per cent", "to": "economic growth rate of Singapore is anticipated to decelerate"}, {"arrows": "to", "from": "release of treated water", "to": "China banned all seafood imports"}, {"arrows": "to", "from": "Beijing has vowed retaliation", "to": "trade war threat"}, {"arrows": "to", "from": "Beijing has vowed retaliation", "to": "started a trade war with China"}, {"arrows": "to", "from": "stepped up its military and political pressure", "to": "vows to resist annexation"}, {"arrows": "to", "from": "stepped up its military and political pressure", "to": "authorises US$571 million in military aid to Taiwan"}, {"arrows": "to", "from": "stepped up its military and political pressure", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "threatened to apply a tariff of 25 per cent", "to": "sweeping tariffs on goods"}, {"arrows": "to", "from": "threatened to apply a tariff of 25 per cent", "to": "10 per cent tariffs on all Chinese imports"}, {"arrows": "to", "from": "threatened to apply a tariff of 25 per cent", "to": "tariff threat"}, {"arrows": "to", "from": "threatened to apply a tariff of 25 per cent", "to": "raise tariffs by as much as 20 per cent"}, {"arrows": "to", "from": "threatened to apply a tariff of 25 per cent", "to": "25 per cent tariff on all products from Mexico and Canada"}, {"arrows": "to", "from": "US approves $515 million arms sale to Taiwan", "to": "discussed \"China\u0027s military threats\""}, {"arrows": "to", "from": "US approves $515 million arms sale to Taiwan", "to": "Taiwan President Lai Ching-te\u0027s Pacific trip"}, {"arrows": "to", "from": "US approves $515 million arms sale to Taiwan", "to": "China vows \u2018countermeasures\u2019"}, {"arrows": "to", "from": "new US sanctions", "to": "Global oil prices jumped"}, {"arrows": "to", "from": "new US sanctions", "to": "US approves $515 million arms sale to Taiwan"}, {"arrows": "to", "from": "new US sanctions", "to": "tensions between the US and China are high"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "sweeping tariffs on goods"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "would rather not impose tariffs"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "tariff threat"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "trade war threat"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "unveiled steep tariff increases"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "started a trade war with China"}, {"arrows": "to", "from": "10 per cent tariffs on all Chinese imports", "to": "discussing a 10 per cent punitive duty"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "pledged to increase the budget deficit, issue more debt and loosen monetary policy"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "very productive meeting"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "sweeping tariffs on goods"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "US tariff hikes on Chinese imports"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "would rather not impose tariffs"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "10 per cent tariffs on all Chinese imports"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "discussing a 10 per cent punitive duty"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "tariff threat"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "raise tariffs by as much as 20 per cent"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "threatened to apply a tariff of 25 per cent"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "25 per cent tariff on all products from Mexico and Canada"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "Trump has promised to impose sweeping tariffs"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "campaign to boycott China"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "trade war threat"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "Trump\u0027s \u0027America First\u0027 policy"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "unveiled steep tariff increases"}, {"arrows": "to", "from": "threatened to slap a 60 per cent flat fee on Chinese goods", "to": "started a trade war with China"}, {"arrows": "to", "from": "China banned all seafood imports", "to": "promotional efforts to boost seafood exports"}, {"arrows": "to", "from": "China banned all seafood imports", "to": "gradually resume importing seafood"}, {"arrows": "to", "from": "China banned all seafood imports", "to": "release of treated water"}, {"arrows": "to", "from": "frequent military operations", "to": "$300 million sale"}, {"arrows": "to", "from": "tensions between the US and China are high", "to": "joint exercises"}, {"arrows": "to", "from": "tensions between the US and China are high", "to": "China banned all seafood imports"}, {"arrows": "to", "from": "very productive meeting", "to": "Mexico\u0027s warning on tariff consequences"}, {"arrows": "to", "from": "trade war threat", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "trade war threat", "to": "unveiled steep tariff increases"}, {"arrows": "to", "from": "trade war threat", "to": "started a trade war with China"}, {"arrows": "to", "from": "unveiled steep tariff increases", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "unveiled steep tariff increases", "to": "trade war threat"}, {"arrows": "to", "from": "unveiled steep tariff increases", "to": "US tariff hikes on Chinese imports"}, {"arrows": "to", "from": "unveiled steep tariff increases", "to": "tensions between the US and China are high"}, {"arrows": "to", "from": "unveiled steep tariff increases", "to": "started a trade war with China"}, {"arrows": "to", "from": "discussed \"China\u0027s military threats\"", "to": "China increased military pressure"}, {"arrows": "to", "from": "discussed \"China\u0027s military threats\"", "to": "ramped up military activities"}, {"arrows": "to", "from": "discussed \"China\u0027s military threats\"", "to": "stepped up its military and political pressure"}, {"arrows": "to", "from": "discussed \"China\u0027s military threats\"", "to": "urged the US to stop sending wrong signals"}, {"arrows": "to", "from": "discussed \"China\u0027s military threats\"", "to": "frequent military operations"}, {"arrows": "to", "from": "pledged to increase the budget deficit, issue more debt and loosen monetary policy", "to": "slowing economy"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "threatened to slap a 60 per cent flat fee on Chinese goods"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "10 per cent tariffs on all Chinese imports"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "tariff threat"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "threatened to apply a tariff of 25 per cent"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "25 per cent tariff on all products from Mexico and Canada"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "US tariff hikes on Chinese imports"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "Beijing has vowed retaliation"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "would rather not impose tariffs"}, {"arrows": "to", "from": "sweeping tariffs on goods", "to": "unveiled steep tariff increases"}, {"arrows": "to", "from": "China increased military pressure", "to": "received 38 advanced Abrams battle tanks"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
