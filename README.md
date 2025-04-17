@@ -42,6 +42,8 @@
 2. KG Analysis: `notebooks/KG_insights.ipynb`.
 3. Casual Relations Prediction: `Causal Relations.ipynb` 
 
+# Visualization
 
+1. Interactive knowledge graph: `kg_insights/event_clusters_pyvis.html`
 
 
